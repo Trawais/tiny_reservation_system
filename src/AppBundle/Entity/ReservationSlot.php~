@@ -1,0 +1,12 @@
+<?php
+namespace AppBundle\Entity;
+
+class ReservationSlot
+{
+    private $date;
+    private $location;
+    private $lector;
+    private $level;
+    private $capacity;
+    private $note;
+}
