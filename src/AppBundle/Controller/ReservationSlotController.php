@@ -24,4 +24,22 @@ class ReservationSlotController extends Controller
             'reservation_slot' => $reservation_slot
         ]);
     }
+
+    public function showAllAction()
+    {
+        $reservations = $this->getDoctrine()
+            ->getRepository('AppBundle:ReservationSlot')
+            ->findBy([], ['date' => 'ASC']);
+
+        if ($reservations) {
+            return $this->render('reservation_slot/showAll.html.twig', [
+                'reservations' => $reservations
+            ]);
+        }
+        else {
+            throw $this->createNotFoundException(
+                'No reservation found'
+            );
+        }
+    }
 }

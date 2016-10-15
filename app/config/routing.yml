@@ -9,3 +9,7 @@ home_page:
 create_reservation_slot:
     path: /reservation/create
     defaults: { _controller: AppBundle:ReservationSlot:create }
+
+show_all_reservation_slot:
+    path: /reservation
+    defaults: { _controller: AppBundle:ReservationSlot:showAll }

@@ -1,0 +1,19 @@
+<b>Kdy:</b> {{ reservation.date|date("d. m. H:i") }}</br>
+
+{% if reservation.location %}
+  <b>Kde:</b> {{ reservation.location }}</br>
+{% endif %}
+
+{% if reservation.lector %}
+  <b>S kym:</b> {{ reservation.lector }}</br>
+{% endif %}
+
+{% if reservation.level %}
+  <b>Pro koho:</b> {{ reservation.level }}</br>
+{% endif %}
+
+<b>Kapacita:</b> {{ reservation.capacity }}</br>
+
+{% if reservation.note %}
+  <b>Poznamka:</b> {{ reservation.note }}</br>
+{% endif %}
