@@ -1,6 +1,8 @@
 <?php
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 class ReservationSlot
 {
     private $date;
@@ -9,11 +11,17 @@ class ReservationSlot
     private $level;
     private $capacity;
     private $note;
+    private $visitors;
     /**
      * @var integer
      */
     private $id;
 
+
+    public function __construct()
+    {
+        $this->visitors = new ArrayCollection();
+    }
 
     /**
      * Get id
