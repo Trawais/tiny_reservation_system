@@ -1,0 +1,10 @@
+<?php
+
+namespace AppBundle\Entity;
+
+class Visitor
+{
+    private $name;
+    private $enrolled_at;
+    private $reservation_slot;
+}

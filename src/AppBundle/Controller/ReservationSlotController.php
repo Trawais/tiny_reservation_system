@@ -18,9 +18,15 @@ class ReservationSlotController extends Controller
 
         $form = $this->createForm(ReservationSlotType::class, $reservation_slot);
 
-        // $em = $this->getDoctrine()->getManager();
-        // $em->persist($reservation_slot);
-        // $em->flush();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($reservation_slot);
+            $em->flush();
+
+            return $this->redirectToRoute('show_all_reservation_slot');
+        }
 
         return $this->render('reservation_slot/create.html.twig', [
             'form' => $form->createView()
