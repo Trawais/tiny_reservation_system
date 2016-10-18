@@ -10,6 +10,14 @@ create_reservation_slot:
     path: /reservation/create
     defaults: { _controller: AppBundle:ReservationSlot:create }
 
+update_reservation_slot:
+    path: /reservation/update/{id}
+    defaults: { _controller: AppBundle:ReservationSlot:update }
+
+delete_reservation_slot:
+    path: /reservation/delete/{id}
+    defaults: { _controller: AppBundle:ReservationSlot:delete }
+
 show_all_reservation_slot:
     path: /reservation
     defaults: { _controller: AppBundle:ReservationSlot:showAll }

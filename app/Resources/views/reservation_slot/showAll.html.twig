@@ -10,9 +10,13 @@
       <tr>
         {% for reservation in reservations %}
           <td class="tg-yw4l">
-             {{ include('reservation_slot/detail.html.twig', { 'reservation': reservation }) }}
+            {{ include('reservation_slot/detail.html.twig', { 'reservation': reservation }) }}
+            <hr>
+            <a href="{{ path('update_reservation_slot', { 'id': reservation.id }) }}">Upravit</a>
+            <a href="{{ path('delete_reservation_slot', { 'id': reservation.id }) }}">Smazat</a>
           </td>
         {% endfor %}
       </tr>
     </table>
+    <div><a href="{{ path('create_reservation_slot') }}">Pridat novy trenink</a></div>
 {% endblock %}

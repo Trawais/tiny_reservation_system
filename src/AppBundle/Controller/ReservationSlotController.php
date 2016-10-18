@@ -33,6 +33,48 @@ class ReservationSlotController extends Controller
         ]);
     }
 
+    public function updateAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $reservation_slot = $em->getRepository('AppBundle:ReservationSlot')->find($id);
+
+        if (!$reservation_slot) {
+            throw $this->createNotFoundException(
+                'No "reservation slot" found for id '.$id
+            );
+        }
+
+        $form = $this->createForm(ReservationSlotType::class, $reservation_slot);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            return $this->redirectToRoute('show_all_reservation_slot');
+        }
+
+        return $this->render('reservation_slot/create.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    public function deleteAction($id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $reservation_slot = $em->getRepository('AppBundle:ReservationSlot')->find($id);
+
+        if (!$reservation_slot) {
+            throw $this->createNotFoundException(
+                'No "reservation slot" found for id '.$id
+            );
+        }
+
+        $em->remove($reservation_slot);
+        $em->flush();
+
+        return $this->redirectToRoute('show_all_reservation_slot');
+    }
+
     public function showAllAction()
     {
         $reservations = $this->getDoctrine()
