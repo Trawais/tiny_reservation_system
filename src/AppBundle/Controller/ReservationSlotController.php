@@ -79,7 +79,8 @@ class ReservationSlotController extends Controller
     {
         $reservations = $this->getDoctrine()
             ->getRepository('AppBundle:ReservationSlot')
-            ->findBy([], ['date' => 'ASC']);
+            ->findBy([], ['date' => 'ASC'])
+        ;
 
         // $visitor = new Visitor();
         // $visitor->setReservationSlot();
@@ -90,7 +91,7 @@ class ReservationSlotController extends Controller
                 'reservations' => $reservations
             ]);
         }
-        else {
+        else { //TODO should be handled properly, if no reservation is presented
             throw $this->createNotFoundException(
                 'No reservation found'
             );

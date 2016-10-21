@@ -1,26 +1,67 @@
 <?php
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @ORM\Entity
+ */
 class ReservationSlot
 {
-    private $date;
-    private $location;
-    private $lector;
-    private $level;
-    private $capacity;
-    private $note;
-    private $visitors;
     /**
-     * @var integer
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Assert\NotBlank()
+     */
+    private $date;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $location;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $lector;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $level;
+
+    /**
+     * @ORM\Column(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Range(min = 0, max = 255)
+     */
+    private $capacity;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $note;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Visitor", mappedBy="reservation_slot")
+     */
+    private $visitors;
+
 
 
     public function __construct()
     {
         $this->visitors = new ArrayCollection();
     }
-    
+
     /**
      * Get id
      *

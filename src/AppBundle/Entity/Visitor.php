@@ -23,13 +23,13 @@ class Visitor
     /**
      * @ORM\Column(type="datetime")
      */
-    private $enrolled_at;
+    private $enrolledAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="ReservationSlot", inversedBy="visitors")
      * @ORM\JoinColumn(name="reservation_slot_id", referencedColumnName="id")
      */
-    private $reservation_slot;
+    private $reservationSlot;
 
     
 
@@ -76,7 +76,7 @@ class Visitor
      */
     public function setEnrolledAt($enrolledAt)
     {
-        $this->enrolled_at = $enrolledAt;
+        $this->enrolledAt = $enrolledAt;
 
         return $this;
     }
@@ -88,7 +88,7 @@ class Visitor
      */
     public function getEnrolledAt()
     {
-        return $this->enrolled_at;
+        return $this->enrolledAt;
     }
 
     /**
@@ -100,7 +100,7 @@ class Visitor
      */
     public function setReservationSlot(\AppBundle\Entity\ReservationSlot $reservationSlot = null)
     {
-        $this->reservation_slot = $reservationSlot;
+        $this->reservationSlot = $reservationSlot;
 
         return $this;
     }
@@ -112,6 +112,6 @@ class Visitor
      */
     public function getReservationSlot()
     {
-        return $this->reservation_slot;
+        return $this->reservationSlot;
     }
 }

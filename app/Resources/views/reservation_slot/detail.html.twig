@@ -17,3 +17,8 @@
 {% if reservation.note %}
   <b>Poznamka:</b></br>{{ reservation.note }}</br>
 {% endif %}
+
+<b>Prihlaseni:</b></br>
+{% for visitor in reservation.visitors %}
+  <span title="{{ visitor.enrolledAt|date("d. n. H:i") }}">{{ visitor.name }}</span></br>
+{% endfor %}

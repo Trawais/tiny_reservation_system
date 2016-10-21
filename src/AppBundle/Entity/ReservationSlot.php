@@ -51,7 +51,7 @@ class ReservationSlot
     private $note;
 
     /**
-     * @ORM\OneToMany(targetEntity="Visitor", mappedBy="reservation_slot")
+     * @ORM\OneToMany(targetEntity="Visitor", mappedBy="reservationSlot")
      */
     private $visitors;
 
@@ -214,5 +214,39 @@ class ReservationSlot
     public function getNote()
     {
         return $this->note;
+    }
+
+    /**
+     * Add visitor
+     *
+     * @param \AppBundle\Entity\Visitor $visitor
+     *
+     * @return ReservationSlot
+     */
+    public function addVisitor(\AppBundle\Entity\Visitor $visitor)
+    {
+        $this->visitors[] = $visitor;
+
+        return $this;
+    }
+
+    /**
+     * Remove visitor
+     *
+     * @param \AppBundle\Entity\Visitor $visitor
+     */
+    public function removeVisitor(\AppBundle\Entity\Visitor $visitor)
+    {
+        $this->visitors->removeElement($visitor);
+    }
+
+    /**
+     * Get visitors
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVisitors()
+    {
+        return $this->visitors;
     }
 }
