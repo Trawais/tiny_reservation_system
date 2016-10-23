@@ -18,7 +18,23 @@
   <b>Poznamka:</b></br>{{ reservation.note }}</br>
 {% endif %}
 
-<b>Prihlaseni:</b></br>
-{% for visitor in reservation.visitors %}
-  <span title="{{ visitor.enrolledAt|date("d. n. H:i") }}">{{ visitor.name }}</span></br>
-{% endfor %}
+{% if reservation.visitors %}
+  <b>Prihlaseni:</b></br>
+  {% for visitor in reservation.visitors %}
+    <span title="{{ visitor.enrolledAt|date("d. n. H:i") }}">{{ visitor.name }}</span>
+    {% if is_granted('ROLE_ADMIN') %}
+      <a href="{{ path('delete_visitor', { 'id': visitor.id }) }}">Smazat</a>
+    {% endif %}
+    </br>
+  {% endfor %}
+{% endif %}
+
+{% if is_granted('ROLE_USER') %}
+  {{
+    form(visitorForm, {
+      'action': path(
+        'add_visitor', { 'reservationSlotId': reservation.id }
+      )
+    })
+  }}
+{% endif %}

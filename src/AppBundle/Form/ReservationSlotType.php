@@ -19,6 +19,6 @@ class ReservationSlotType extends AbstractType
             ->add('level', TextType::class, ['label' => 'Pro koho: ', 'required' => false])
             ->add('capacity', TextType::class, ['label' => 'Kapacita: '])
             ->add('note', TextareaType::class, ['label' => 'Poznamka: ', 'required' => false])
-            ->add('save', SubmitType::class, ['label' => 'Vytvorit']);
+            ->add('save', SubmitType::class, ['label' => 'Ulozit']);
     }
 }

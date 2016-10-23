@@ -2,11 +2,12 @@
 
 namespace AppBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\ReservationSlot;
 use AppBundle\Form\ReservationSlotType;
+use AppBundle\Entity\Visitor;
+use AppBundle\Form\VisitorType;
 
 class ReservationSlotController extends Controller
 {
@@ -77,18 +78,30 @@ class ReservationSlotController extends Controller
 
     public function showAllAction()
     {
-        $reservations = $this->getDoctrine()
+        $query = $this->getDoctrine()
             ->getRepository('AppBundle:ReservationSlot')
-            ->findBy([], ['date' => 'ASC'])
+            ->createQueryBuilder('r')
+            ->where('r.date > :today')
+            ->setParameter('today', new \DateTime('-12 hours'))
+            ->orderBy('r.date', 'ASC')
+            ->getQuery()
         ;
+        $reservations = $query->getResult();
 
-        // $visitor = new Visitor();
-        // $visitor->setReservationSlot();
-        // $form = $this->createForm(TaskType::class, $visitor);
+        $reservationsForms = [];
+        foreach ($reservations as $reservation) {
+            $visitor = new Visitor();
+            $visitor->setReservationSlot($reservation);
+            $form = $this->createForm(VisitorType::class, $visitor);
+            $reservationsForms[] = [
+                'reservation' => $reservation,
+                'form' => $form->createView()
+            ];
+        }
 
         if ($reservations) {
             return $this->render('reservation_slot/showAll.html.twig', [
-                'reservations' => $reservations
+                'reservationsForms' => $reservationsForms
             ]);
         }
         else { //TODO should be handled properly, if no reservation is presented

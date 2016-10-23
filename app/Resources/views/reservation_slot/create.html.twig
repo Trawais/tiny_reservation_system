@@ -1,5 +1,11 @@
-{{ form_start(form) }}
-{{ form_widget(form) }}
-{{ form_end(form) }}
+{% extends 'base.html.twig' %}
 
-<div><a href="{{ path('show_all_reservation_slot') }}">Zpet</a></div>
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+
+    <div>
+        <a href="{{ path('show_all_reservation_slot') }}">Zpet na prehled</a>
+    </div>
+{% endblock %}
