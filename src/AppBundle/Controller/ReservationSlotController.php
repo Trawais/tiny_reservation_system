@@ -99,15 +99,9 @@ class ReservationSlotController extends Controller
             ];
         }
 
-        if ($reservations) {
-            return $this->render('reservation_slot/showAll.html.twig', [
-                'reservationsForms' => $reservationsForms
-            ]);
-        }
-        else { //TODO should be handled properly, if no reservation is presented
-            throw $this->createNotFoundException(
-                'No reservation found'
-            );
-        }
+        // $reservationsForms is always array, empty in the worst case
+        return $this->render('reservation_slot/showAll.html.twig', [
+            'reservationsForms' => $reservationsForms
+        ]);
     }
 }
