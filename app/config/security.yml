@@ -36,8 +36,8 @@ security:
 
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/reservation$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/reservation$, roles: ROLE_USER }
-        - { path: ^/reservation/\d*/visitor/create$, roles: ROLE_USER }
+        - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/$, roles: ROLE_USER }
+        - { path: ^/\d*/visitor/create$, roles: ROLE_USER }
         - { path: ^/, roles: ROLE_ADMIN }
 

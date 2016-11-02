@@ -2,28 +2,24 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
-#home_page:
-#    path: /
-#    defaults: { _controller: AppBundle:Default:index }
-
 show_all_reservation_slot:
-    path: /reservation
+    path: /
     defaults: { _controller: AppBundle:ReservationSlot:showAll }
 
 create_reservation_slot:
-    path: /reservation/create
+    path: /create
     defaults: { _controller: AppBundle:ReservationSlot:create }
 
 update_reservation_slot:
-    path: /reservation/{id}/update
+    path: /{id}/update
     defaults: { _controller: AppBundle:ReservationSlot:update }
 
 delete_reservation_slot:
-    path: /reservation/{id}/delete
+    path: /{id}/delete
     defaults: { _controller: AppBundle:ReservationSlot:delete }
 
 add_visitor:
-    path: /reservation/{reservationSlotId}/visitor/create
+    path: /{reservationSlotId}/visitor/create
     defaults: { _controller: AppBundle:Visitor:create }
 
 delete_visitor:
