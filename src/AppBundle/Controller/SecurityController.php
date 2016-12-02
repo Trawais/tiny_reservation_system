@@ -3,6 +3,9 @@
 namespace AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class SecurityController extends Controller
 {
@@ -17,9 +20,15 @@ class SecurityController extends Controller
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUserName();
 
+        $form = $this->createFormBuilder(['username' => $lastUsername])
+            ->add('username', TextType::class, ['label' => 'Uzivatel'])
+            ->add('password', PasswordType::class, ['label' => 'Heslo'])
+            ->add('login', SubmitType::class, ['label' => 'Prihlasit'])
+            ->getForm();
+
         return $this->render('security/login.html.twig', [
-            'last_username' => $lastUsername,
-            'error'         => $error,
+            'form' => $form->createView(),
+            'error' => $error
         ]);
     }
 }
