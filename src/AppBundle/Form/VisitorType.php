@@ -11,7 +11,7 @@ class VisitorType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('save', SubmitType::class);
+            ->add('name', TextType::class, ['label' => 'Zadej tým a klikni přihlásit'])
+            ->add('save', SubmitType::class, ['label' => 'Přihlásit']);
     }
 }

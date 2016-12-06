@@ -1,31 +1,39 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <style type="text/css">
-    .tg  {border-collapse:collapse;border-spacing:0;}
-    .tg td {font-family:Arial,sans-serif;font-size:12px;padding:5px 2px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}
-    .tg .tg-yw4l{vertical-align:top}
+    {% set row_length = 4 %}
+    <style>
+        .panel-borderless {
+            border: 0;
+            box-shadow: none;
+        }
     </style>
-    <table class="tg">
-      <tr>
-        {% for reservationForm in reservationsForms %}
-          <td class="tg-yw4l">
-            {{ include('reservation_slot/detail.html.twig', { 'reservation': reservationForm.reservation, 'visitorForm': reservationForm.form }) }}
-            {% if is_granted('ROLE_ADMIN') %}
-                <hr>
-                <a href="{{ path('update_reservation_slot', { 'id': reservationForm.reservation.id }) }}">Upravit</a>
-                <a href="{{ path('delete_reservation_slot', { 'id': reservationForm.reservation.id }) }}">Smazat</a>
-            {% endif %}
-          </td>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                {% if not is_granted('ROLE_USER') %}
+                    <div class="panel panel-borderless">
+                        <a href="{{ path('login') }}" class="btn btn-primary">Přihlásit se</a>
+                    </div>
+                {% endif %}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="panel panel-borderless">
+                        <a href="{{ path('create_reservation_slot') }}" class="btn btn-success">Vytvořit nový trénink</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% for index_row in 0..(reservationsForms|length // row_length) %}
+            <div class="row">
+                {% set start_index = index_row * row_length %}
+                {% set length = min(row_length, reservationsForms|length - (index_row * row_length)) %}
+
+                {% for reservationForm in reservationsForms|slice(start_index, length) %}
+                    {{ include('reservation_slot/detail.html.twig', { 'reservation': reservationForm.reservation, 'visitorForm': reservationForm.form }) }}
+                {% endfor %}
+            </div>
         {% endfor %}
-      </tr>
-    </table>
-    <div>
-        {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('create_reservation_slot') }}">Novy trenink</a>
-        {% endif %}
-        {% if not is_granted('ROLE_USER') %}
-            <a href="{{ path('login') }}">Prihlasit se</a>
-        {% endif %}
     </div>
 {% endblock %}

@@ -1,40 +1,89 @@
-<b>Kdy:</b> {{ reservation.date|date("d. n. H:i") }}</br>
+<style type="text/css">
+    .dl-horizontal dt { width: 70px; }
+    .dl-horizontal dd { margin-left: 80px; }
+    dl { margin-bottom: 10px;}
+    .table { margin-bottom: 10px;}
+</style>
 
-{% if reservation.location %}
-  <b>Kde:</b> {{ reservation.location }}</br>
-{% endif %}
+<div class="col-md-3">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            {% set dayname_mapping = {
+                'Monday': 'Pondělí',
+                'Tuesday': 'Úterý',
+                'Wednesday': 'Středa',
+                'Thursday': 'Čtvrtek',
+                'Friday': 'Pátek',
+                'Saturday': 'Sobota',
+                'Sunday': 'Neděle'
+            } %}
 
-{% if reservation.lector %}
-  <b>S kym:</b> {{ reservation.lector }}</br>
-{% endif %}
+            {{ reservation.date|date("l")|replace(dayname_mapping) }} -
+            {{ reservation.date|date("d. n. H:i") }}
+        </div>
+        <div class="panel-body">
+            <dl class="dl-horizontal">
+                {% if reservation.location %}
+                    <dt>Kde</dt>
+                    <dd>{{ reservation.location }}</dd>
+                {% endif %}
+                {% if reservation.lector %}
+                    <dt>S kým</dt>
+                    <dd>{{ reservation.lector }}</dd>
+                {% endif %}
+                {% if reservation.level %}
+                    <dt>Pro koho</dt>
+                    <dd>{{ reservation.level }}</dd>
+                {% endif %}
+                {% if reservation.capacity %}
+                    <dt>Kapacita</dt>
+                    <dd>{{ reservation.capacity }}</dd>
+                {% endif %}
+                {% if reservation.note %}
+                    <dt>Poznámka</dt>
+                    <dd>{{ reservation.note }}</dd>
+                {% endif %}
+            </dl>
 
-{% if reservation.level %}
-  <b>Pro koho:</b> {{ reservation.level }}</br>
-{% endif %}
+            {% if reservation.visitors|length > 0 %}
+                <table class="table table-condensed table-hover">
+                    <thead>
+                    <tr>
+                        <th>Přihlášené týmy</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for visitor in reservation.visitors %}
+                        <tr>
+                            <td>
+                                <span title="{{ visitor.enrolledAt|date("d. n. H:i") }}">{{ visitor.name }}</span>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('delete_visitor', { 'id': visitor.id }) }}" class="btn btn-xs btn-danger">Smazat</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
 
-<b>Kapacita:</b> {{ reservation.capacity }}</br>
+            {% if is_granted('ROLE_USER') %}
+                {{
+                    form(visitorForm, {
+                        'action': path(
+                        'add_visitor', { 'reservationSlotId': reservation.id }
+                    )})
+                }}
+            {% endif %}
 
-{% if reservation.note %}
-  <b>Poznamka:</b></br>{{ reservation.note }}</br>
-{% endif %}
-
-{% if reservation.visitors %}
-  <b>Prihlaseni:</b></br>
-  {% for visitor in reservation.visitors %}
-    <span title="{{ visitor.enrolledAt|date("d. n. H:i") }}">{{ visitor.name }}</span>
-    {% if is_granted('ROLE_ADMIN') %}
-      <a href="{{ path('delete_visitor', { 'id': visitor.id }) }}">Smazat</a>
-    {% endif %}
-    </br>
-  {% endfor %}
-{% endif %}
-
-{% if is_granted('ROLE_USER') %}
-  {{
-    form(visitorForm, {
-      'action': path(
-        'add_visitor', { 'reservationSlotId': reservation.id }
-      )
-    })
-  }}
-{% endif %}
+        </div> {# panel-body #}
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="panel-footer">
+                <div class="btn-group">
+                    <a href="{{ path('update_reservation_slot', { 'id': reservationForm.reservation.id }) }}" class="btn btn-sm btn-primary">Upravit</a>
+                    <a href="{{ path('delete_reservation_slot', { 'id': reservationForm.reservation.id }) }}" class="btn btn-sm btn-danger">Smazat</a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
