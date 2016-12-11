@@ -46,7 +46,7 @@
             </dl>
 
             {% if reservation.visitors|length > 0 %}
-                <table class="table table-condensed table-hover">
+                <table class="table table-condensed">
                     <thead>
                     <tr>
                         <th>Přihlášené týmy</th>
@@ -54,7 +54,11 @@
                     </thead>
                     <tbody>
                     {% for visitor in reservation.visitors %}
-                        <tr>
+                        {% if loop.index > reservation.capacity %}
+                            <tr class="danger">
+                        {% else %}
+                            <tr class="info">
+                        {% endif %}
                             <td>
                                 <span title="{{ visitor.enrolledAt|date("d. n. H:i") }}">{{ visitor.name }}</span>
                                 {% if is_granted('ROLE_ADMIN') %}
