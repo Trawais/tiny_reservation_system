@@ -1,21 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container" style="position: relative;">
-        <div style="max-width: 440px; position: absolute; margin: auto; left: 0; right: 0; top: 0; bottom: 0;">
-        {% if error %}
-            <div class="alert alert-danger">
-                {{ error.messageKey|trans(error.messageData, 'security') }}
-            </div>
-        {% endif %}
+    <div class="row">
+        <div class="col-xs-12">
+            {% if error %}
+                <div class="alert alert-danger">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
 
 
-        {{ form_start(form) }}
-        {{ form_row(form.username, { 'id': 'username', 'full_name': '_username' }) }}
-        {{ form_row(form.password, { 'id': 'password', 'full_name': '_password' }) }}
-        {{ form_row(form.login) }}
-        {{ form_end(form) }}
+            {{ form_start(form) }}
+            {{ form_row(form.username, { 'id': 'username', 'full_name': '_username' }) }}
+            {{ form_row(form.password, { 'id': 'password', 'full_name': '_password' }) }}
+            {{ form_row(form.login) }}
+            {{ form_end(form) }}
         </div>
-
     </div>
 {% endblock %}

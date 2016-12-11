@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% set row_length = 4 %}
+    {% set row_length = 6 %}
     <style>
         .panel-borderless {
             border: 0;
@@ -9,31 +9,29 @@
         }
     </style>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                {% if not is_granted('ROLE_USER') %}
-                    <div class="panel panel-borderless">
-                        <a href="{{ path('login') }}" class="btn btn-primary">Přihlásit se</a>
-                    </div>
-                {% endif %}
-                {% if is_granted('ROLE_ADMIN') %}
-                    <div class="panel panel-borderless">
-                        <a href="{{ path('create_reservation_slot') }}" class="btn btn-success">Vytvořit nový trénink</a>
-                    </div>
-                {% endif %}
-            </div>
+    <div class="row">
+        <div class="col-md-12">
+            {% if not is_granted('ROLE_USER') %}
+                <div class="panel panel-borderless">
+                    <a href="{{ path('login') }}" class="btn btn-primary">Přihlásit se</a>
+                </div>
+            {% endif %}
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="panel panel-borderless">
+                    <a href="{{ path('create_reservation_slot') }}" class="btn btn-success">Vytvořit nový trénink</a>
+                </div>
+            {% endif %}
         </div>
-
-        {% for index_row in 0..(reservationsForms|length // row_length) %}
-            <div class="row">
-                {% set start_index = index_row * row_length %}
-                {% set length = min(row_length, reservationsForms|length - (index_row * row_length)) %}
-
-                {% for reservationForm in reservationsForms|slice(start_index, length) %}
-                    {{ include('reservation_slot/detail.html.twig', { 'reservation': reservationForm.reservation, 'visitorForm': reservationForm.form }) }}
-                {% endfor %}
-            </div>
-        {% endfor %}
     </div>
+
+    {% for index_row in 0..(reservationsForms|length // row_length) %}
+        <div class="row">
+            {% set start_index = index_row * row_length %}
+            {% set length = min(row_length, reservationsForms|length - (index_row * row_length)) %}
+
+            {% for reservationForm in reservationsForms|slice(start_index, length) %}
+                {{ include('reservation_slot/detail.html.twig', { 'reservation': reservationForm.reservation, 'visitorForm': reservationForm.form }) }}
+            {% endfor %}
+        </div>
+    {% endfor %}
 {% endblock %}
