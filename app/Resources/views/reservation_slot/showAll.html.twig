@@ -27,7 +27,7 @@
             {% for reservationForm in reservationsForms|slice(start_index, length) %}
                 {{ include('reservation_slot/detail.html.twig', { 'reservation': reservationForm.reservation, 'visitorForm': reservationForm.form }) }}
                 {% if loop.index == HALF_OF_ROW_LENGTH %}
-                    <div class="clearfix visible-md-block"></div>
+                    <div class="clearfix visible-sm-block"></div>
                 {% endif %}
             {% endfor %}
         </div>

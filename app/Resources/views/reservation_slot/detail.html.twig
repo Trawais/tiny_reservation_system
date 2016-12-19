@@ -1,4 +1,4 @@
-<div class="col-lg-3 col-md-6 col-xs-12">
+<div class="col-md-3 col-sm-6 col-xs-12">
     <div class="panel panel-primary">
         <div class="panel-heading">
             {% set dayname_mapping = {
@@ -76,12 +76,19 @@
             {% endif %}
 
             {% if is_granted('ROLE_USER') %}
-                {{
-                    form(visitorForm, {
-                        'action': path(
-                        'add_visitor', { 'reservationSlotId': reservation.id }
-                    )})
-                }}
+                {{ form_start(visitorForm, {
+                    'action': path(
+                        'add_visitor',
+                        { 'reservationSlotId': reservation.id }
+                    )
+                }) }}
+                <div class="input-group">
+                    {{ form_errors(visitorForm.name) }}
+                    {{ form_widget(visitorForm.name) }}
+
+                    <span class="input-group-btn">{{ form_widget(visitorForm.save) }}</span>
+                </div>
+                {{ form_end(visitorForm) }}
             {% endif %}
 
         </div> {# END OF panel-body #}
