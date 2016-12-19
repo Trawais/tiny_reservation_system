@@ -1,4 +1,4 @@
-<div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+<div class="col-lg-3 col-md-6 col-xs-12">
     <div class="panel panel-primary">
         <div class="panel-heading">
             {% set dayname_mapping = {
@@ -12,7 +12,11 @@
             } %}
 
             {{ reservation.date|date("l")|replace(dayname_mapping) }} -
-            {{ reservation.date|date("d. n. H:i") }}
+            {{ reservation.date|date("j. n. H:i") }}
+            {% if reservation.visitors|length >= reservation.capacity %}
+                &nbsp;
+                <span class="label label-danger">Obsazeno</span>
+            {% endif %}
         </div>
         <div class="panel-body">
             <dl class="dl-horizontal">
@@ -29,8 +33,15 @@
                     <dd>{{ reservation.level }}</dd>
                 {% endif %}
                 {% if reservation.capacity %}
-                    <dt>Kapacita</dt>
-                    <dd>{{ reservation.capacity }}</dd>
+                    <dt>Volných</dt>
+                    <dd>
+                    {% set free_capacity = max(reservation.capacity - reservation.visitors|length, 0) %}
+                    {% if free_capacity == 0 %}
+                        <span style="color: #D9534F; font-weight: bold;">{{ free_capacity }}</span>
+                    {% else %}
+                        {{ free_capacity }}
+                    {% endif %}
+                    </dd>
                 {% endif %}
                 {% if reservation.note %}
                     <dt>Poznámka</dt>
@@ -73,7 +84,7 @@
                 }}
             {% endif %}
 
-        </div> {# panel-body #}
+        </div> {# END OF panel-body #}
         {% if is_granted('ROLE_ADMIN') %}
             <div class="panel-footer">
                 <div class="btn-group">
