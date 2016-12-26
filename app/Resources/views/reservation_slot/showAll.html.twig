@@ -1,13 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {% set ROW_LENGTH = 4 %}
-    {% set HALF_OF_ROW_LENGTH = ROW_LENGTH / 2 %}
     <div class="row" style="padding-bottom: 15px; padding-top: 15px;">
-        <div class="col-md-12">
+        <div class="col-md-12 smaller-padding">
             {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('create_reservation_slot') }}" class="btn btn-success">Vytvořit nový trénink</a>
-
             {% endif %}
 
             {% if is_granted('ROLE_USER') %}
@@ -15,21 +12,21 @@
             {% else %}
                 <a href="{{ path('login') }}" class="btn btn-primary">Přihlásit se</a>
             {% endif %}
-
         </div>
     </div>
 
-    {% for index_row in 0..(reservationsForms|length // ROW_LENGTH) %}
-        <div class="row">
-            {% set start_index = index_row * ROW_LENGTH %}
-            {% set length = min(ROW_LENGTH, reservationsForms|length - (index_row * ROW_LENGTH)) %}
-
-            {% for reservationForm in reservationsForms|slice(start_index, length) %}
-                {{ include('reservation_slot/detail.html.twig', { 'reservation': reservationForm.reservation, 'visitorForm': reservationForm.form }) }}
-                {% if loop.index == HALF_OF_ROW_LENGTH %}
-                    <div class="clearfix visible-sm-block"></div>
-                {% endif %}
-            {% endfor %}
-        </div>
-    {% endfor %}
+    <div class="row">
+        {% for reservationForm in reservationsForms %}
+            {{ include('reservation_slot/detail.html.twig', { 'reservation': reservationForm.reservation, 'visitorForm': reservationForm.form }) }}
+            {% if (loop.index % 6) == 0 %}
+                <div class="clearfix visible-lg-block"></div>
+            {% endif %}
+            {% if (loop.index % 4) == 0 %}
+                <div class="clearfix visible-md-block"></div>
+            {% endif %}
+            {% if loop.index % 2 == 0 %}
+                <div class="clearfix visible-sm-block"></div>
+            {% endif %}
+        {% endfor %}
+    </div>
 {% endblock %}
