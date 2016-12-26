@@ -94,7 +94,7 @@
         </div> {# END OF panel-body #}
         {% if is_granted('ROLE_ADMIN') %}
             <div class="panel-footer">
-                <div class="btn-group btn-group-xs">
+                <div class="btn-group btn-group-sm">
                     <a href="{{ path('update_reservation_slot', { 'id': reservationForm.reservation.id }) }}" class="btn btn-primary">Upravit</a>
                     <a href="{{ path('delete_reservation_slot', { 'id': reservationForm.reservation.id }) }}" class="btn btn-danger">Smazat</a>
                 </div>
