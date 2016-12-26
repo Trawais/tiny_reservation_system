@@ -27,7 +27,7 @@ class Visitor
 
     /**
      * @ORM\ManyToOne(targetEntity="ReservationSlot", inversedBy="visitors")
-     * @ORM\JoinColumn(name="reservation_slot_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="reservation_slot_id", referencedColumnName="id", onDelete="CASCADE")
      */
     private $reservationSlot;
 

@@ -1,0 +1,13 @@
+{
+  "name": "tiny_reservation_system",
+  "homepage": "https://github.com/Trawais/tiny_reservation_system",
+  "authors": [
+    "trawais002 <trawais002@gmail.com>"
+  ],
+  "description": "tiny reservation system primarily made for agility (dog jumping over counters) lessons",
+  "main": "",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}
