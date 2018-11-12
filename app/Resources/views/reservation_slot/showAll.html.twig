@@ -5,6 +5,7 @@
         <div class="col-md-12 smaller-padding">
             {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('create_reservation_slot') }}" class="btn btn-success">Vytvořit nový trénink</a>
+                <a href="{{ path('show_all_sports') }}" class="btn btn-info">Sporty</a>
             {% endif %}
 
             {% if is_granted('ROLE_USER') %}

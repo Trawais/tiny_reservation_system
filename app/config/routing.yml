@@ -26,6 +26,14 @@ delete_visitor:
     path: /visitor/{id}/delete
     defaults: { _controller: AppBundle:Visitor:delete }
 
+show_all_sports:
+    path: /sport
+    defaults: { _controller: AppBundle:Sport:showAll }
+
+create_sport:
+    path: /sport/create
+    defaults: { _controller: AppBundle:Sport:create }
+
 login:
     path: /login
     defaults: { _controller: AppBundle:Security:login }

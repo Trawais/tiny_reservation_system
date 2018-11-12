@@ -1,6 +1,6 @@
 <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12 smaller-padding">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
+    <div class="card">
+        <div class="card-header">
             {% set dayname_mapping = {
                 'Monday': 'Pondělí',
                 'Tuesday': 'Úterý',
@@ -11,41 +11,41 @@
                 'Sunday': 'Neděle'
             } %}
 
-            {{ reservation.date|date("l")|replace(dayname_mapping) }} -
+            {{ reservation.date|date("l")|replace(dayname_mapping) }}
             {{ reservation.date|date("j. n. H:i") }}
+
             {% if reservation.visitors|length >= reservation.capacity %}
-                &nbsp;
-                <span class="label label-danger">Obsazeno</span>
+                <span class="badge badge-danger">Obsazeno</span>
             {% endif %}
         </div>
-        <div class="panel-body">
-            <dl class="dl-horizontal">
+        <div class="card-body">
+            <dl class="row">
                 {% if reservation.location %}
-                    <dt>Kde</dt>
-                    <dd>{{ reservation.location }}</dd>
+                    <dt class="col-4">Kde</dt>
+                    <dd class="col-8">{{ reservation.location }}</dd>
                 {% endif %}
                 {% if reservation.lector %}
-                    <dt>S kým</dt>
-                    <dd>{{ reservation.lector }}</dd>
+                    <dt class="col-4">S kým</dt>
+                    <dd class="col-8">{{ reservation.lector }}</dd>
                 {% endif %}
                 {% if reservation.level %}
-                    <dt>Pro koho</dt>
-                    <dd>{{ reservation.level }}</dd>
+                    <dt class="col-4">Pro koho</dt>
+                    <dd class="col-8">{{ reservation.level }}</dd>
                 {% endif %}
                 {% if reservation.capacity %}
-                    <dt>Volných</dt>
-                    <dd>
-                    {% set free_capacity = max(reservation.capacity - reservation.visitors|length, 0) %}
-                    {% if free_capacity == 0 %}
-                        <span style="color: #D9534F; font-weight: bold;">{{ free_capacity }}</span>
+                    <dt class="col-4">Kapacita</dt>
+                    <dd class="col-8">
+                    {% set visitors = reservation.visitors|length %}
+                    {% if visitors == reservation.capacity %}
+                        <span style="color: #D9534F; font-weight: bold;">{{ visitors }} / {{ reservation.capacity }}</span>
                     {% else %}
-                        {{ free_capacity }}
+                        {{ visitors }} / {{ reservation.capacity }}
                     {% endif %}
                     </dd>
                 {% endif %}
                 {% if reservation.note %}
-                    <dt>Poznámka</dt>
-                    <dd>{{ reservation.note }}</dd>
+                    <dt class="col-4">Poznámka</dt>
+                    <dd class="col-8">{{ reservation.note }}</dd>
                 {% endif %}
             </dl>
 
