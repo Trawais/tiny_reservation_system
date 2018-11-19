@@ -51,7 +51,7 @@ class ReservationSlot
     private $note;
 
     /**
-     * @ORM\OneToMany(targetEntity="Visitor", mappedBy="reservationSlot")
+     * @ORM\OneToMany(targetEntity="Visitor", mappedBy="reservationSlot", cascade={"remove"})
      */
     private $visitors;
 

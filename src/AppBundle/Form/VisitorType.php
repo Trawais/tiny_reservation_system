@@ -12,6 +12,6 @@ class VisitorType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, ['label' => 'Zadej tým a klikni na přidat:'])
-            ->add('save', SubmitType::class, ['label' => 'Přidat']);
+            ->add('save', SubmitType::class, ['label' => 'Přidat', 'attr' => ['class' => 'btn-outline-success'] ]);
     }
 }

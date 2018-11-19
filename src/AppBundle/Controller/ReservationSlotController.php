@@ -11,8 +11,18 @@ use AppBundle\Form\VisitorType;
 
 class ReservationSlotController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
     public function createAction(Request $request)
     {
+        // Delete all old reservation slots
+        // This is HACK
+        // So we don't need any cron job for cleaning old slots
+        $this->deleteAllOld();
+
         $reservation_slot = new ReservationSlot();
         $reservation_slot->setDate(new \DateTime());
         $reservation_slot->setCapacity(8);
@@ -76,16 +86,37 @@ class ReservationSlotController extends Controller
         return $this->redirectToRoute('show_all_reservation_slot');
     }
 
+    /**
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    private function deleteAllOld()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $repository = $em->getRepository('AppBundle:ReservationSlot');
+
+        $oldSlots = $repository->createQueryBuilder('rs')
+            ->where('rs.date < :today')
+            ->setParameter('today', new \DateTime('-12 hours'))
+            ->getQuery()
+            ->getResult();
+
+        foreach ($oldSlots as $oldSlot) {
+            $em->remove($oldSlot);
+        }
+
+        $em->flush();
+    }
+
     public function showAllAction()
     {
         $query = $this->getDoctrine()
+            ->getEntityManager()
             ->getRepository('AppBundle:ReservationSlot')
             ->createQueryBuilder('r')
             ->where('r.date > :today')
             ->setParameter('today', new \DateTime('-12 hours'))
             ->orderBy('r.date', 'ASC')
-            ->getQuery()
-        ;
+            ->getQuery();
         $reservations = $query->getResult();
 
         $reservationsForms = [];

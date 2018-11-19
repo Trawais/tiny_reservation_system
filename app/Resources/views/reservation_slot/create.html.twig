@@ -1,17 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4 cols-xs-12">
+    <div class="row py-5">
+        <div class="col-md-4 offset-md-4 cols-xs-12">
             {{ form_start(form) }}
             {{ form_widget(form) }}
             {{ form_end(form) }}
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4 cols-xs-12">
-            <a href="{{ path('show_all_reservation_slot') }}" class="btn btn-primary">Zpět na přehled</a>
+            <a href="{{ path('show_all_reservation_slot') }}" class="btn btn-outline-primary">Zpět na přehled</a>
         </div>
     </div>
 {% endblock %}
