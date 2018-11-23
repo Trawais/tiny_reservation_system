@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Repository\ReservationSlotRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\ReservationSlot;
@@ -87,11 +88,13 @@ class ReservationSlotController extends Controller
     }
 
     /**
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Exception
      */
     private function deleteAllOld()
     {
-        $em = $this->getDoctrine()->getEntityManager();
+
+        $em = $this->getDoctrine()->getManager();
+        /** @var ReservationSlotRepository $repository */
         $repository = $em->getRepository('AppBundle:ReservationSlot');
 
         $oldSlots = $repository->createQueryBuilder('rs')
@@ -109,15 +112,17 @@ class ReservationSlotController extends Controller
 
     public function showAllAction()
     {
-        $query = $this->getDoctrine()
-            ->getEntityManager()
-            ->getRepository('AppBundle:ReservationSlot')
-            ->createQueryBuilder('r')
+        /** @var ReservationSlotRepository $repository */
+        $repository = $this->getDoctrine()
+            ->getManager()
+            ->getRepository('AppBundle:ReservationSlot');
+
+        $reservations =  $repository->createQueryBuilder('r')
             ->where('r.date > :today')
             ->setParameter('today', new \DateTime('-12 hours'))
             ->orderBy('r.date', 'ASC')
-            ->getQuery();
-        $reservations = $query->getResult();
+            ->getQuery()
+            ->getResult();
 
         $reservationsForms = [];
         foreach ($reservations as $reservation) {
