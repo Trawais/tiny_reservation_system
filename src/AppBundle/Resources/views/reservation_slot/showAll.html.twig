@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'AppBundle::base.html.twig' %}
 
 {% block body %}
     <div class="row" style="padding-bottom: 15px; padding-top: 15px;">
@@ -18,7 +18,7 @@
 
     <div class="row">
         {% for reservationForm in reservationsForms %}
-            {{ include('reservation_slot/detail.html.twig', { 'reservation': reservationForm.reservation, 'visitorForm': reservationForm.form }) }}
+            {{ include('AppBundle:reservation_slot:detail.html.twig', { 'reservation': reservationForm.reservation, 'visitorForm': reservationForm.form }) }}
             {% if (loop.index % 6) == 0 %}
                 <div class="clearfix visible-lg-block"></div>
             {% endif %}

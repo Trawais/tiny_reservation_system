@@ -26,7 +26,7 @@ class SecurityController extends Controller
             ->add('login', SubmitType::class, ['label' => 'Prihlasit'])
             ->getForm();
 
-        return $this->render('security/login.html.twig', [
+        return $this->render('AppBundle:security:login.html.twig', [
             'form' => $form->createView(),
             'error' => $error
         ]);

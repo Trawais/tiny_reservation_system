@@ -15,7 +15,7 @@ class ReservationSlotController extends Controller
     /**
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @throws \Exception
      */
     public function createAction(Request $request)
     {
@@ -40,7 +40,7 @@ class ReservationSlotController extends Controller
             return $this->redirectToRoute('show_all_reservation_slot');
         }
 
-        return $this->render('reservation_slot/create.html.twig', [
+        return $this->render('AppBundle:reservation_slot:create.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -65,7 +65,7 @@ class ReservationSlotController extends Controller
             return $this->redirectToRoute('show_all_reservation_slot');
         }
 
-        return $this->render('reservation_slot/create.html.twig', [
+        return $this->render('AppBundle:reservation_slot:create.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -110,6 +110,10 @@ class ReservationSlotController extends Controller
         $em->flush();
     }
 
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     */
     public function showAllAction()
     {
         /** @var ReservationSlotRepository $repository */
@@ -135,8 +139,8 @@ class ReservationSlotController extends Controller
             ];
         }
 
-        // $reservationsForms is always array, empty in the worst case
-        return $this->render('reservation_slot/showAll.html.twig', [
+        // $reservationsForms is always array; empty in the worst case
+        return $this->render('AppBundle:reservation_slot:showAll.html.twig', [
             'reservationsForms' => $reservationsForms
         ]);
     }
