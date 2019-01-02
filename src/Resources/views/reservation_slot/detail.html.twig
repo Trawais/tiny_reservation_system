@@ -1,0 +1,107 @@
+<div class="col-lg-2 col-md-3 col-sm-6 col-xs-12 px-2">
+    <div class="card">
+        <div class="card-header">
+            {% set dayname_mapping = {
+                'Monday': 'Pondělí',
+                'Tuesday': 'Úterý',
+                'Wednesday': 'Středa',
+                'Thursday': 'Čtvrtek',
+                'Friday': 'Pátek',
+                'Saturday': 'Sobota',
+                'Sunday': 'Neděle'
+            } %}
+
+            {{ reservation.date|date("l")|replace(dayname_mapping) }}
+            {{ reservation.date|date("j. n. H:i") }}
+
+            {% if reservation.visitors|length >= reservation.capacity %}
+                <span class="badge badge-danger">Obsazeno</span>
+            {% endif %}
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                {% if reservation.location %}
+                    <dt class="col-4">Kde</dt>
+                    <dd class="col-8">{{ reservation.location }}</dd>
+                {% endif %}
+                {% if reservation.lector %}
+                    <dt class="col-4">S kým</dt>
+                    <dd class="col-8">{{ reservation.lector }}</dd>
+                {% endif %}
+                {% if reservation.level %}
+                    <dt class="col-4">Pro koho</dt>
+                    <dd class="col-8">{{ reservation.level }}</dd>
+                {% endif %}
+                {% if reservation.capacity %}
+                    <dt class="col-4">Kapacita</dt>
+                    <dd class="col-8">
+                    {% set visitors = reservation.visitors|length %}
+                    {% if visitors >= reservation.capacity %}
+                        <span style="color: #D9534F; font-weight: bold;">{{ visitors }} / {{ reservation.capacity }}</span>
+                    {% else %}
+                        {{ visitors }} / {{ reservation.capacity }}
+                    {% endif %}
+                    </dd>
+                {% endif %}
+
+                {% if reservation.note %}
+                    <dt class="col-12">Poznámka:</dt>
+                    <dd class="col-12">{{ reservation.note }}</dd>
+                {% endif %}
+            </dl>
+
+
+            {% if reservation.visitors|length > 0 %}
+                <table class="table table-sm">
+                    {#<thead>#}
+                    {#<tr>#}
+                        {#<th>Týmy</th>#}
+                    {#</tr>#}
+                    {#</thead>#}
+                    <tbody>
+                    {% for visitor in reservation.visitors %}
+                        {% if loop.index > reservation.capacity %}
+                            <tr class="table-danger">
+                        {% else %}
+                            <tr>
+                        {% endif %}
+                            <td>
+                                <span title="{{ visitor.enrolledAt|date("d. n. H:i") }}">{{ visitor.name }}</span>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="{{ path('delete_visitor', { 'id': visitor.id }) }}" class="btn btn-outline-danger btn-sm">Smazat</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+
+            {% if is_granted('ROLE_USER') %}
+                {{ form_start(visitorForm, {
+                    'action': path(
+                        'add_visitor',
+                        { 'reservationSlotId': reservation.id }
+                    )
+                }) }}
+                <div class="input-group">
+                    {{ form_errors(visitorForm.name) }}
+                    {{ form_widget(visitorForm.name) }}
+
+                    <span class="input-group-append">{{ form_widget(visitorForm.save) }}</span>
+                </div>
+                {{ form_end(visitorForm) }}
+            {% endif %}
+
+        </div> {# END OF card-body #}
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="card-footer">
+                <div class="btn-group btn-group-sm">
+                    <a href="{{ path('update_reservation_slot', { 'id': reservationForm.reservation.id }) }}" class="btn btn-outline-primary">Upravit</a>
+                    <a href="{{ path('delete_reservation_slot', { 'id': reservationForm.reservation.id }) }}" class="btn btn-outline-danger">Smazat</a>
+                </div>
+            </div>
+        {% endif %}
+    </div> {# END OF card #}
+</div>
