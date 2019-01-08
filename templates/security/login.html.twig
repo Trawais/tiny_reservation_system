@@ -4,35 +4,23 @@
 
 {% block body %}
 <div class="row my-5">
-    <div class="col-md-4 offset-md-4 col-xs-12">
+    <div class="col-lg-2 offset-lg-5 col-md-4 offset-md-4 col-xs-12">
         <form method="post">
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
 
             <h1 class="h3 mb-3 font-weight-normal">Přihlášení</h1>
+
             <label for="inputUsername" class="sr-only">Uživatel</label>
             <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
             <label for="inputPassword" class="sr-only">Heslo</label>
             <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
 
-            <input type="hidden" name="_csrf_token"
-                   value="{{ csrf_token('authenticate') }}"
-            >
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-            {#
-                Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-                See https://symfony.com/doc/current/security/remember_me.html
-
-                <div class="checkbox mb-3">
-                    <label>
-                        <input type="checkbox" name="_remember_me"> Remember me
-                    </label>
-                </div>
-            #}
-
-            <button class="btn btn-lg btn-primary" type="submit">
-                Sign in
+            <button class="btn mt-2 btn-success" type="submit">
+                Přihlásit
             </button>
         </form>
     </div>
