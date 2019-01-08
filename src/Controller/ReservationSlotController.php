@@ -7,12 +7,16 @@ use App\Entity\Visitor;
 use App\Form\ReservationSlotType;
 use App\Form\VisitorType;
 use App\Repository\ReservationSlotRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class ReservationSlotController extends AbstractController
 {
     /**
+     * @Route("/create", name="app_createReservationSlot")
+     * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
@@ -37,7 +41,7 @@ class ReservationSlotController extends AbstractController
             $em->persist($reservation_slot);
             $em->flush();
 
-            return $this->redirectToRoute('show_all_reservation_slot');
+            return $this->redirectToRoute('app_showAllReservations');
         }
 
         return $this->render('reservation_slot/create.html.twig', [
@@ -45,10 +49,18 @@ class ReservationSlotController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{id}/update", name="app_updateReservationSlot")
+     * @IsGranted("ROLE_ADMIN")
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $reservation_slot = $em->getRepository('AppBundle:ReservationSlot')->find($id);
+        $reservation_slot = $em->getRepository(ReservationSlot::class)->find($id);
 
         if (!$reservation_slot) {
             throw $this->createNotFoundException(
@@ -70,10 +82,16 @@ class ReservationSlotController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/{id}/delete", name="app_deleteReservationSlot")
+     * @IsGranted("ROLE_ADMIN")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function deleteAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $reservation_slot = $em->getRepository('AppBundle:ReservationSlot')->find($id);
+        $reservation_slot = $em->getRepository(ReservationSlot::class)->find($id);
 
         if (!$reservation_slot) {
             throw $this->createNotFoundException(
@@ -111,10 +129,11 @@ class ReservationSlotController extends AbstractController
     }
 
     /**
+     * @Route("/", name="app_showAllReservations")
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
-    public function showAllAction()
+    public function showAll()
     {
         /** @var ReservationSlotRepository $repository */
         $repository = $this->getDoctrine()

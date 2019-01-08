@@ -1,13 +1,13 @@
-{% extends 'base.html.twig' %}
+{% extends "base.html.twig" %}
 
 {% block body %}
     <div class="row py-5">
         <div class="col-md-4 offset-md-4 cols-xs-12">
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
+            {#{{ form_start(form) }}#}
+            {#{{ form_widget(form) }}#}
+            {#{{ form_end(form) }}#}
 
-            <a href="{{ path('show_all_reservation_slot') }}" class="btn btn-outline-primary">Zpět na přehled</a>
+            <a href="{{ path('app_showAllReservations') }}" class="btn btn-primary">Zpět na přehled</a>
         </div>
     </div>
 {% endblock %}

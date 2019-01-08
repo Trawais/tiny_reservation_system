@@ -68,7 +68,7 @@
                             <td>
                                 <span title="{{ visitor.enrolledAt|date("d. n. H:i") }}">{{ visitor.name }}</span>
                                 {% if is_granted('ROLE_ADMIN') %}
-                                    <a href="{{ path('delete_visitor', { 'id': visitor.id }) }}" class="btn btn-outline-danger btn-sm">Smazat</a>
+                                    <a href="{{ path('app_deleteVisitor', { 'id': visitor.id }) }}" class="btn btn-outline-danger btn-sm">Smazat</a>
                                 {% endif %}
                             </td>
                         </tr>
@@ -80,7 +80,7 @@
             {% if is_granted('ROLE_USER') %}
                 {{ form_start(visitorForm, {
                     'action': path(
-                        'add_visitor',
+                        'app_addVisitor',
                         { 'reservationSlotId': reservation.id }
                     )
                 }) }}
@@ -98,8 +98,8 @@
         {% if is_granted('ROLE_ADMIN') %}
             <div class="card-footer">
                 <div class="btn-group btn-group-sm">
-                    <a href="{{ path('update_reservation_slot', { 'id': reservationForm.reservation.id }) }}" class="btn btn-outline-primary">Upravit</a>
-                    <a href="{{ path('delete_reservation_slot', { 'id': reservationForm.reservation.id }) }}" class="btn btn-outline-danger">Smazat</a>
+                    <a href="{{ path('app_updateReservationSlot', { 'id': reservationForm.reservation.id }) }}" class="btn btn-outline-primary">Upravit</a>
+                    <a href="{{ path('app_deleteReservationSlot', { 'id': reservationForm.reservation.id }) }}" class="btn btn-outline-danger">Smazat</a>
                 </div>
             </div>
         {% endif %}

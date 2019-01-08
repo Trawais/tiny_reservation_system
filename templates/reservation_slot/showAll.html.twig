@@ -4,15 +4,17 @@
     <div class="row" style="padding-bottom: 15px; padding-top: 15px;">
         <div class="col-md-12 px-2">
             {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('create_reservation_slot') }}" class="btn btn-success">Vytvořit nový trénink</a>
-                <a href="{{ path('show_all_sports') }}" class="btn btn-info">Sporty</a>
+                <a href="{{ path('app_createReservationSlot') }}" class="btn btn-success">Vytvořit nový trénink</a>
+                <a href="{{ path('app_showAllSports') }}" class="btn btn-info">Sporty</a>
             {% endif %}
 
             {% if is_granted('ROLE_USER') %}
-                <a href="{{ path('logout') }}" class="btn btn-outline-danger">Odhlásit se</a>
+                <a href="{{ path('app_logout') }}" class="btn btn-outline-danger">Odhlásit se</a>
             {% else %}
-                <a href="{{ path('login') }}" class="btn btn-outline-success">Přihlásit se</a>
+                <a href="{{ path('app_login') }}" class="btn btn-outline-success">Přihlásit se</a>
             {% endif %}
+
+            {#<a href="{{ path('app_login') }}" class="btn btn-outline-success">Přihlásit se</a>#}
         </div>
     </div>
 

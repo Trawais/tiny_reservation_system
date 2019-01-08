@@ -1,43 +1,26 @@
+controllers:
+    resource: "../src/Controller/"
+    type: annotation
+
+app_logout:
+    path: /logout
+
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
-show_all_reservation_slot:
-  path: /
-  controller: App\Controller\ReservationSlotController::showAllAction
-
-create_reservation_slot:
-  path: /create
-  controller: App\Controller\ReservationSlotController::createAction
-
-#update_reservation_slot:
-#  path: /{id}/update
-#  defaults: { _controller: AppBundle:ReservationSlot:update }
+#show_all_reservation_slot:
+#  path: /
+#  controller: App\Controller\ReservationSlotController::showAllAction
 #
-#delete_reservation_slot:
-#  path: /{id}/delete
-#  defaults: { _controller: AppBundle:ReservationSlot:delete }
+#create_reservation_slot:
+#  path: /create
+#  controller: App\Controller\ReservationSlotController::createAction
 #
 #add_visitor:
 #  path: /{reservationSlotId}/visitor/create
 #  defaults: { _controller: AppBundle:Visitor:create }
 #
-#delete_visitor:
-#  path: /visitor/{id}/delete
-#  defaults: { _controller: AppBundle:Visitor:delete }
-#
-#show_all_sports:
-#  path: /sport
-#  defaults: { _controller: AppBundle:Sport:showAll }
-#
 #create_sport:
 #  path: /sport/create
 #  defaults: { _controller: AppBundle:Sport:create }
-#
-login:
-  path: /login
-  controller: App\Controller\SecurityController:loginAction
-#  defaults: { _controller: AppBundle:Security:login }
-#
-#logout:
-#  path: /logout

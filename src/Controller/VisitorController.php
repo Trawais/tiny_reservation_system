@@ -3,14 +3,25 @@
 namespace App\Controller;
 
 use App\Entity\ReservationSlot;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use App\Entity\Visitor;
-use Symfony\Component\HttpFoundation\Request;
 use App\Form\VisitorType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 
-class VisitorController extends Controller
+class VisitorController extends AbstractController
 {
-    public function createAction(Request $request, $reservationSlotId)
+    /**
+     * @Route("/{reservationSlotId}/visitor/create", name="app_addVisitor")
+     * @IsGranted("ROLE_USER")
+     *
+     * @param Request $request
+     * @param $reservationSlotId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
+     */
+    public function create(Request $request, $reservationSlotId)
     {
         $visitor = new Visitor();
         $visitor->setReservationSlot($this->getReservationSlot($reservationSlotId));
@@ -25,13 +36,19 @@ class VisitorController extends Controller
             $em->flush();
         }
 
-        return $this->redirectToRoute('show_all_reservation_slot');
+        return $this->redirectToRoute('app_showAllReservations');
     }
 
-    public function deleteAction($id)
+    /**
+     * @Route("/visitor/{id}/delete", name="app_deleteVisitor")
+     * @IsGranted("ROLE_ADMIN")
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function delete($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $visitor = $em->getRepository('AppBundle:Visitor')->find($id);
+        $visitor = $em->getRepository(Visitor::class)->find($id);
 
         if (!$visitor) {
             throw $this->createNotFoundException(
@@ -42,7 +59,7 @@ class VisitorController extends Controller
         $em->remove($visitor);
         $em->flush();
 
-        return $this->redirectToRoute('show_all_reservation_slot');
+        return $this->redirectToRoute('app_showAllReservations');
     }
 
     /**
@@ -52,7 +69,7 @@ class VisitorController extends Controller
     private function getReservationSlot($reservationSlotId)
     {
         $em = $this->getDoctrine()->getManager();
-        $reservationSlot = $em->getRepository('AppBundle:ReservationSlot')->find($reservationSlotId);
+        $reservationSlot = $em->getRepository(ReservationSlot::class)->find($reservationSlotId);
 
         if (!$reservationSlot) {
             throw $this->createNotFoundException(
