@@ -4,8 +4,8 @@
 
 {% block body %}
 <h1>Sporty</h1>
-    <div class="row">
-        <div class="col-lg-4 col-md-6 col-sm-12">
+    <div class="row py-5">
+        <div class="offset-md-4 col-md-4 col-sm-12">
             <table class="table">
                 <tbody>
                 {% for sport in sports %}
@@ -14,7 +14,10 @@
                             {{ sport.name }}
                         </td>
                         <td>
-                            <a href="{{ path('app_deleteSport', { 'id': sport.id }) }}" class="btn btn-outline-danger btn-sm">Smazat</a>
+                            <div class="btn-group" role="group" aria-label="Action buttons">
+                                <a href="{{ path('app_updateSport', { 'id': sport.id }) }}" class="btn btn-outline-primary btn-sm">Upravit</a>
+                                <a href="{{ path('app_deleteSport', { 'id': sport.id }) }}" class="btn btn-outline-danger btn-sm">Smazat</a>
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}
@@ -24,7 +27,7 @@
     </div>
 
     <div class="row">
-        <div class="col-12 float-left">
+        <div class="offset-md-4 col-md-4 col-sm-12">
             <a href="{{ path('app_createSport') }}" class="btn btn-success">Nový sport</a>
             <a href="{{ path('app_showAllReservations') }}" class="btn btn-primary">Zpět na přehled</a>
         </div>

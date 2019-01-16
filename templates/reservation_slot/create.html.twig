@@ -3,9 +3,9 @@
 {% block body %}
     <div class="row py-5">
         <div class="col-md-4 offset-md-4 cols-xs-12">
-            {#{{ form_start(form) }}#}
-            {#{{ form_widget(form) }}#}
-            {#{{ form_end(form) }}#}
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
 
             <a href="{{ path('app_showAllReservations') }}" class="btn btn-primary">Zpět na přehled</a>
         </div>

@@ -4,4 +4,13 @@
 
 {% block body %}
 <h1>Nový sport</h1>
+    <div class="row py-5">
+        <div class="col-md-4 offset-md-4 cols-xs-12">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+
+            <a href="{{ path('app_showAllSports') }}" class="btn btn-primary">Zpět na sporty</a>
+        </div>
+    </div>
 {% endblock %}
