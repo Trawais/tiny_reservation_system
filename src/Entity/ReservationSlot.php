@@ -55,6 +55,12 @@ class ReservationSlot
      */
     private $visitors;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Sport", inversedBy="reservationSlots")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $sport;
+
 
 
     public function __construct()
@@ -248,5 +254,17 @@ class ReservationSlot
     public function getVisitors()
     {
         return $this->visitors;
+    }
+
+    public function getSport(): ?Sport
+    {
+        return $this->sport;
+    }
+
+    public function setSport(?Sport $sport): self
+    {
+        $this->sport = $sport;
+
+        return $this;
     }
 }

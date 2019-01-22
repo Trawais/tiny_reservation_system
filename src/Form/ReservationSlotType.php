@@ -2,6 +2,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -12,7 +13,10 @@ class ReservationSlotType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $this->
+
         $builder
+            ->add('sport', ChoiceType::class, [ "choice" ] )
             ->add('date', DateTimeType::class, ['label' => 'Kdy: ',
                 'date_widget' => 'single_text',
                 'time_widget' => 'choice',
