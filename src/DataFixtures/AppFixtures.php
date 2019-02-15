@@ -15,8 +15,11 @@ class AppFixtures extends Fixture
      */
     public function load(ObjectManager $manager)
     {
-        $sport = new Sport();
-        $sport->setName("Agility");
+        $sportAgility = new Sport();
+        $sportAgility->setName("Agility");
+
+        $sportHoopers = new Sport();
+        $sportHoopers->setName("Hoopers");
 
         $timestamp = strtotime("+ 5 day");
         $date = new \DateTime();
@@ -25,9 +28,10 @@ class AppFixtures extends Fixture
         $slot = new ReservationSlot();
         $slot->setDate($date);
         $slot->setCapacity(8);
-        $slot->setSport($sport);
+        $slot->setSport($sportAgility);
 
-        $manager->persist($sport);
+        $manager->persist($sportAgility);
+        $manager->persist($sportHoopers);
         $manager->persist($slot);
         $manager->flush();
     }

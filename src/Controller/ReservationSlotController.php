@@ -18,6 +18,7 @@ class ReservationSlotController extends AbstractController
      * @Route("/create", name="app_createReservationSlot")
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
+     * @param SportController $sportController
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      */
@@ -102,7 +103,7 @@ class ReservationSlotController extends AbstractController
         $em->remove($reservation_slot);
         $em->flush();
 
-        return $this->redirectToRoute('show_all_reservation_slot');
+        return $this->redirectToRoute('app_showAllReservations');
     }
 
     /**
@@ -110,7 +111,6 @@ class ReservationSlotController extends AbstractController
      */
     private function deleteAllOld()
     {
-
         $em = $this->getDoctrine()->getManager();
         /** @var ReservationSlotRepository $repository */
         $repository = $em->getRepository('App:ReservationSlot');

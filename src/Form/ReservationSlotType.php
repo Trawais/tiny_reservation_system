@@ -1,22 +1,28 @@
 <?php
 namespace App\Form;
 
+use App\Entity\Sport;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class ReservationSlotType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->
-
         $builder
-            ->add('sport', ChoiceType::class, [ "choice" ] )
+            ->add(
+                'sport',
+                EntityType::class,
+                [
+                    "class" => Sport::class,
+                    "choice_label" => "name"
+                ]
+            )
             ->add('date', DateTimeType::class, ['label' => 'Kdy: ',
                 'date_widget' => 'single_text',
                 'time_widget' => 'choice',
