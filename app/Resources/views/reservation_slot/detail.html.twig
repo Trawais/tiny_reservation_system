@@ -1,6 +1,16 @@
 <div class="col-lg-2 col-md-3 col-sm-6 col-xs-12 smaller-padding">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
+    {% if reservation.level|replace({' ': ''})|lower == "agility-mazáci" %}
+        <div class="panel panel-primary">
+    {% elseif reservation.level|replace({' ': ''})|lower == "agility-dorost" %}
+        <div class="panel panel-warning">
+    {% elseif reservation.level|replace({' ': ''})|lower == "agility-začátečníci" %}
+        <div class="panel panel-danger">
+    {% elseif reservation.level|replace({' ': ''})|lower == "hoopers" %}
+        <div class="panel panel-success">
+    {% else %}
+        <div class="panel panel-info">
+    {% endif %}
+            <div class="panel-heading">
             {% set dayname_mapping = {
                 'Monday': 'Pondělí',
                 'Tuesday': 'Úterý',
