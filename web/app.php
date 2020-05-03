@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ERROR | E_PARSE);
+
 use Symfony\Component\HttpFoundation\Request;
 
 /** @var \Composer\Autoload\ClassLoader $loader */
