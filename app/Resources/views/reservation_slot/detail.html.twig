@@ -81,7 +81,7 @@
                 </table>
             {% endif %}
 
-            {% if is_granted('ROLE_USER') %}
+            {# {% if is_granted('ANONYMOUS') %} #}
                 {{ form_start(visitorForm, {
                     'action': path(
                         'add_visitor',
@@ -95,7 +95,7 @@
                     <span class="input-group-btn">{{ form_widget(visitorForm.save) }}</span>
                 </div>
                 {{ form_end(visitorForm) }}
-            {% endif %}
+            {# {% endif %} #}
 
         </div> {# END OF panel-body #}
         {% if is_granted('ROLE_ADMIN') %}
