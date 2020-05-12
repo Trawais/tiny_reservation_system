@@ -10,7 +10,7 @@
             {% if is_granted('ROLE_USER') %}
                 <a href="{{ path('logout') }}" class="btn btn-primary">Odhlásit se</a>
             {% else %}
-                <a href="{{ path('login') }}" class="btn btn-primary">Přihlásit se</a>
+                <a href="{{ path('login') }}" class="btn btn-primary">Admin sekce</a>
             {% endif %}
         </div>
     </div>
