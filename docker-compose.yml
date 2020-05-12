@@ -16,7 +16,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./:/var/www/html/
+      - ./:/var/www/html/:delegated
     ports:
       - "8100:80"
     environment:

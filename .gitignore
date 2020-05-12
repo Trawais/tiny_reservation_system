@@ -16,4 +16,9 @@
 /web/bundles/
 /web/assets/vendor
 /app/data/*
+
+# IDE settings
 /.idea/
+
+# PHPUnit cache
+.phpunit.result.cache

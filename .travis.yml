@@ -4,4 +4,4 @@ php:
 install:
   - composer install
 script:
-  - exit 0
+  - ./vendor/bin/simple-phpunit
