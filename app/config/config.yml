@@ -34,6 +34,8 @@ framework:
 
 # Twig Configuration
 twig:
+    globals:
+        masker_service: "@app.phone_number_masker"
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
     form_themes:
