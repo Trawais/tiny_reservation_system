@@ -22,3 +22,6 @@
 
 # PHPUnit cache
 .phpunit.result.cache
+
+# MacOS hidden files
+**/.DS_Store
