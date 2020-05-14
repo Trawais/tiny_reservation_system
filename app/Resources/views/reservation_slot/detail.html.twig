@@ -37,9 +37,9 @@
                     <dd>
                     {% set free_capacity = max(reservation.capacity - reservation.visitors|length, 0) %}
                     {% if free_capacity == 0 %}
-                        <span style="color: #D9534F; font-weight: bold;">{{ free_capacity }}</span>
+                        <span style="color: #D9534F; font-weight: bold;">{{ free_capacity }} / {{ reservation.capacity }}</span>
                     {% else %}
-                        {{ free_capacity }}
+                        {{ free_capacity }} / {{ reservation.capacity }}
                     {% endif %}
                     </dd>
                 {% endif %}
@@ -64,7 +64,13 @@
                             <tr class="info">
                         {% endif %}
                             <td>
-                                <span title="{{ visitor.enrolledAt|date("d. n. H:i") }}">{{ visitor.name }}</span>
+                                <span title="{{ visitor.enrolledAt|date("d. n. H:i") }}">
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    {{ visitor.name }}
+                                {% else %}
+                                    {{ masker_service.mask(visitor.name) }}
+                                {% endif %}
+                                </span>
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <a href="{{ path('delete_visitor', { 'id': visitor.id }) }}" class="btn btn-xs btn-danger">Smazat</a>
                                 {% endif %}

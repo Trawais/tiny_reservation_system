@@ -19,3 +19,13 @@ docker-compose up
 ```
 
 Then go to the url `http://localhost:8100/web/app.php/` to access the home page.
+
+You can access the container with running web-server by command
+```
+docker-compose exec web bash
+```
+
+## Run Unit Tests
+```
+./vendor/bin/simple-phpunit
+```
