@@ -11,10 +11,11 @@ services:
     ports:
       - "3306:3306"
   web:
-    build: ./
+    build: ./docker/web-php/
     container_name: php_web
     depends_on:
       - db
+      - bower
     volumes:
       - ./:/var/www/html/:delegated
     ports:
@@ -24,3 +25,8 @@ services:
       - SYMFONY_DEBUG=1
     stdin_open: true
     tty: true
+  bower:
+    build: ./docker/bower/
+    volumes:
+      - ./:/app:delegated
+    command: bower install
