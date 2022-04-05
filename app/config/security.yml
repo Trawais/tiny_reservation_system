@@ -39,4 +39,3 @@ security:
         - { path: ^/$, roles: ROLE_USER }
         - { path: ^/\d*/visitor/create$, roles: ROLE_USER }
         - { path: ^/, roles: ROLE_ADMIN }
-
